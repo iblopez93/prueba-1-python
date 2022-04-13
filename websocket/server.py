@@ -7,12 +7,15 @@ import websockets
 
 async def handler(websocket):
     while True:
-        data = {
-            'a': randint(1, 100),
-            'b': randint(0, pow(2, 32))
-        }
-        await websocket.send(json.dumps(data))
-        await asyncio.sleep(0.001)
+        try:
+            data = {
+                'a': randint(1, 100),
+                'b': randint(0, pow(2, 32))
+            }
+            await websocket.send(json.dumps(data))
+            await asyncio.sleep(0.001)
+        except websockets.ConnectionClosedOK:
+            break
 
 
 async def main():
